@@ -1,7 +1,7 @@
 <<<<<<< HEAD
 /aws-getting-started.iml
-/.idea/**/
-/target/**/
+/.idea/
+/target/
 =======
 # Compiled class file
 *.class
