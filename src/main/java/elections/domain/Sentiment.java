@@ -10,6 +10,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Sentiment implements Cloneable, Serializable {
-    private String language;
-    private String text;
+    private Float neutral;
+    private Float positive;
+    private Float negative;
 }

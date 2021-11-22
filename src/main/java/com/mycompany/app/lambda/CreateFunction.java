@@ -74,7 +74,6 @@ public class CreateFunction {
         awsLambda.close();
     }
 
-    // snippet-start:[lambda.java2.create.main]
     public static void createLambdaFunction(LambdaClient awsLambda,
                                             String functionName,
                                             String filePath,
