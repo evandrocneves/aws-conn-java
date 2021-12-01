@@ -10,12 +10,11 @@
    Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
    SPDX-License-Identifier: Apache-2.0
 */
-package elections.service.comprehend;
+package br.com.awsSqs.service.nlp;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import elections.domain.Sentiment;
+import br.com.awsSqs.domain.Sentiment;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import software.amazon.awssdk.auth.credentials.EnvironmentVariableCredentialsProvider;
 import software.amazon.awssdk.regions.Region;
@@ -26,51 +25,51 @@ import software.amazon.awssdk.services.comprehend.model.DetectSentimentResponse;
 
 @Service
 @Slf4j
-public class DetectSentimentService {
+public class NlpService {
+    @Value("${cloud.aws.comprehend.language}")
+    private String language;
 
-    public static void main(String[] args) {
+    @Value("${cloud.aws.comprehend.region}")
+    private String region;
 
-//        String text = "Amazon.com, Inc. is located in Seattle, WA and was founded July 5th, 1994 by Jeff Bezos, allowing customers to buy everything from books to blenders. Seattle is north of Portland and south of Vancouver, BC. Other notable Seattle - based companies are Starbucks and Boeing.";
-        String text = "A menina é bem feia";
+    private static NlpService instance;
 
-        System.out.println("Calling DetectSentiment");
-        //detectSentiments(text);
-
+    public static NlpService getInstance() {
+        return (instance == null ? new NlpService() : instance);
     }
 
-    public String detectSentiment(String text) {
-        Region region = Region.US_EAST_1;
 
-        ComprehendClient comClient = ComprehendClient.builder()
-                .credentialsProvider(EnvironmentVariableCredentialsProvider.create())
-                .region(region)
-                .build();
+    public Sentiment detectSentiment(String text) {
+        Region region = Region.of(this.region);
+        ComprehendClient comClient = getComprehendClient(region);
+        Sentiment sentiment = null;
 
-        String json = "";
         try {
             DetectSentimentRequest detectSentimentRequest = DetectSentimentRequest.builder()
                     .text(text)
-                    .languageCode("pt")
+                    .languageCode(language)
                     .build();
 
             DetectSentimentResponse detectSentimentResult = comClient.detectSentiment(detectSentimentRequest);
-            Sentiment sentiment = new Sentiment(detectSentimentResult.sentimentScore().neutral(),
+            sentiment = new Sentiment(text, detectSentimentResult.sentimentScore().neutral(),
                     detectSentimentResult.sentimentScore().positive(),
                     detectSentimentResult.sentimentScore().negative());
-
-            ObjectMapper mapper = new ObjectMapper();
-
-            try {
-                json = mapper.writeValueAsString(sentiment);
-            } catch (JsonProcessingException e) {
-                e.printStackTrace();
-            }
 
         } catch (ComprehendException e) {
             log.error(e.awsErrorDetails().errorMessage());
             comClient.close();
             System.exit(1);
+        } finally {
+            comClient.close();
         }
-        return json;
+        return sentiment;
+    }
+
+    public ComprehendClient getComprehendClient(Region region) {
+        ComprehendClient comClient = ComprehendClient.builder()
+                .credentialsProvider(EnvironmentVariableCredentialsProvider.create())
+                .region(region)
+                .build();
+        return comClient;
     }
 }
