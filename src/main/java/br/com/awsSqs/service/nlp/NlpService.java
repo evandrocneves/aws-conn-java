@@ -1,15 +1,3 @@
-// snippet-sourcedescription:[DetectSentiment demonstrates how to detect sentiments in the text.]
-//snippet-keyword:[AWS SDK for Java v2]
-// snippet-service:[Amazon Comprehend]
-// snippet-keyword:[Code Sample]
-// snippet-sourcetype:[full-example]
-// snippet-sourcedate:[09/28/2021]
-// snippet-sourceauthor:[scmacdon - AWS]
-
-/*
-   Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
-   SPDX-License-Identifier: Apache-2.0
-*/
 package br.com.awsSqs.service.nlp;
 
 import br.com.awsSqs.domain.Sentiment;
