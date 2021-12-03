@@ -1,15 +1,16 @@
-# Exploring AWS Services with Java in depth
+# Exploring AWS Services with Java by Examples
 
-This project has been created in order to use AWS services using Spring Boot.
+This project has been created with the aim of using AWS services with Spring Boot.
 Onto this project, you can find some examples regarding these services:
 ## 1) AWS Simple Queue Service (SQS)
-By using this message queue processing service,
-On the other hand, in case of need a pub-sub service, it's highly recommended to use another AWS Service called SNS (Simple Notification Service).
-You can refer this recommendation into this link: xxxxxx
+Message queue processing service for you serverless applications. 
+On the other hand, in case of need a pub-sub service, it's recommended to use another AWS Service called SNS (Simple Notification Service).
+
+Please, refer: https://aws.amazon.com/pt/blogs/compute/choosing-between-messaging-services-for-serverless-applications/
 
 ## 2) AWS Comprehend
-This service is intended for natural-language processing. It processes text which collects entities, key phrases as well as sentiments.
-Specifically for sentiment analysis, it's possible to analyze any expression neutral, positive or negative.
+This service is intended for Natural-Language Processing (NLP). It's possible to fetch entities, key phrases as well as sentiments.
+Specifically for sentiment analysis, it's possible to segregate any expression as neutral, positive or negative.
 
 
 ## PreReqs
@@ -26,4 +27,4 @@ This URL http://localhost:9091/produce/sentiment must be submitted as below:
 ![img.png](log.png)
 
 ## To be continued
-Please, contribute to this project by sharing ideas... My purpose is to help people to emerge to this technology    
+I'm currently working for this project, therefore, from time to time, I'll provide more examples from AWS Services which might be useful. Additionally, I'll explore more Spring resources such as Spring REST Docs and Spring Cloud Functions (to apply for AWS Lambda).    
